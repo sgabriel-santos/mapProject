@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, FlatList, Pressable } from 'react-native';
+import {Text, View, FlatList, Pressable, Linking } from 'react-native';
 import { Component } from 'react/cjs/react.production.min';
 import {styles} from '../styles/RegisteredQRCodeStyles'
 import {getItems, clearItems} from '../services/LocalMemoryData' 
@@ -33,20 +33,29 @@ export default class RegisteredQRCode extends Component{
   render(){
     return (
       <View style={styles.container}>
-        <Pressable style={styles.buttonRegister} onPress={() => this.clearItemsFromMemory()}>
-          <Text style={styles.clearText}>Clear</Text>
-        </Pressable>
         {this.state.registers &&
-          <FlatList
-            data={this.state.registers}
-            renderItem={
-              ({item}) =>
-                <View style={styles.containerItems}>
-                    <Text style={styles.cardData}>{item.name}</Text>
-                    <Text style={styles.cardDate}>{item.date}</Text>
-                </View>
-            }
-          />
+        <View>
+          <Pressable style={styles.buttonRegister} onPress={() => this.clearItemsFromMemory()}>
+            <Text style={styles.clearText}>Clear</Text>
+          </Pressable>
+            <FlatList
+              data={this.state.registers}
+              renderItem={
+                ({item}) =>
+                  <View style={styles.containerItems}>
+                      <Text style={styles.cardData} onPress={() => Linking.openURL(item.name)}>{item.name}</Text>
+                      <Text style={styles.cardDate}>{item.date}</Text>
+                  </View>
+              }
+            />
+        </View>
+        }
+        {!this.state.registers &&
+          <View style={styles.viewNoItems}>
+            <Text style={styles.noItems}>
+              No items Stored
+            </Text>
+          </View>
         }
       </View>
     );

@@ -35,5 +35,14 @@ export const styles = StyleSheet.create({
       fontSize: 20,
       color: 'white'
 
+    },
+    viewNoItems: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems:'center'
+    },
+    noItems: {
+      fontSize: 20,
+      fontWeight: 'bold'
     }
   })
